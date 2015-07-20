@@ -171,7 +171,7 @@ AbstractTaskFactory::GetType(const OrderedTaskPoint &point) const
     case ObservationZone::Shape::BGAFIXEDCOURSE:
     case ObservationZone::Shape::BGAENHANCEDOPTION:
     case ObservationZone::Shape::ANNULAR_SECTOR:
-      return TaskPointFactoryType::START_CYLINDER;
+      return TaskPointFactoryType::START_CYLINDER_EXIT;
 
     case ObservationZone::Shape::BGA_START:
       return TaskPointFactoryType::START_BGA;
@@ -304,7 +304,9 @@ AbstractTaskFactory::CreatePoint(const TaskPointFactoryType type,
                        wp);
   case TaskPointFactoryType::START_LINE:
     return CreateStart(new LineSectorZone(wp.location, start_radius), wp);
-  case TaskPointFactoryType::START_CYLINDER:
+  case TaskPointFactoryType::START_CYLINDER_EXIT:
+    return CreateStart(new CylinderZone(wp.location, start_radius), wp);
+  case TaskPointFactoryType::START_CYLINDER_ENTRY:
     return CreateStart(new CylinderZone(wp.location, start_radius), wp);
   case TaskPointFactoryType::START_BGA:
     return CreateStart(KeyholeZone::CreateBGAStartSectorZone(wp.location), wp);
@@ -750,7 +752,8 @@ AbstractTaskFactory::ValidateFAIOZs()
 
     switch (GetType(tp)) {
     case TaskPointFactoryType::START_BGA:
-    case TaskPointFactoryType::START_CYLINDER:
+    case TaskPointFactoryType::START_CYLINDER_EXIT:
+    case TaskPointFactoryType::START_CYLINDER_ENTRY:
       valid = false;
       break;
 
@@ -819,7 +822,8 @@ AbstractTaskFactory::ValidateMATOZs()
     const OrderedTaskPoint &tp = task.GetPoint(i);
 
     switch (GetType(tp)) {
-    case TaskPointFactoryType::START_CYLINDER:
+    case TaskPointFactoryType::START_CYLINDER_EXIT:
+    case TaskPointFactoryType::START_CYLINDER_ENTRY:
     case TaskPointFactoryType::START_LINE:
     case TaskPointFactoryType::START_SECTOR:
       break;

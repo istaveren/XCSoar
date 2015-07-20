@@ -98,7 +98,8 @@ FAITaskFactory::GetMutatedPointType(const OrderedTaskPoint &tp) const
   case TaskPointFactoryType::START_LINE:
     break;
 
-  case TaskPointFactoryType::START_CYLINDER:
+  case TaskPointFactoryType::START_CYLINDER_EXIT:
+  case TaskPointFactoryType::START_CYLINDER_ENTRY:
   case TaskPointFactoryType::START_BGA:
     newtype = TaskPointFactoryType::START_SECTOR;
     break;

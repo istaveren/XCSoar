@@ -35,7 +35,8 @@ static constexpr TaskFactoryConstraints mixed_constraints = {
 
 static constexpr LegalPointSet mixed_start_types{
   TaskPointFactoryType::START_LINE,
-  TaskPointFactoryType::START_CYLINDER,
+  TaskPointFactoryType::START_CYLINDER_EXIT,
+  TaskPointFactoryType::START_CYLINDER_ENTRY,
   TaskPointFactoryType::START_BGA,
   TaskPointFactoryType::START_SECTOR,
 };

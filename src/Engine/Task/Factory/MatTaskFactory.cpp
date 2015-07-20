@@ -35,7 +35,8 @@ static constexpr TaskFactoryConstraints mat_constraints = {
 };
 
 static constexpr LegalPointSet mat_start_types{
-  TaskPointFactoryType::START_CYLINDER,
+  TaskPointFactoryType::START_CYLINDER_EXIT,
+  TaskPointFactoryType::START_CYLINDER_ENTRY,
 };
 
 static constexpr LegalPointSet mat_im_types {
@@ -60,13 +61,14 @@ MatTaskFactory::GetMutatedPointType(const OrderedTaskPoint &tp) const
   TaskPointFactoryType newtype = oldtype;
 
   switch (oldtype) {
-  case TaskPointFactoryType::START_CYLINDER:
+  case TaskPointFactoryType::START_CYLINDER_EXIT:
+  case TaskPointFactoryType::START_CYLINDER_ENTRY:
     break;
 
   case TaskPointFactoryType::START_LINE:
   case TaskPointFactoryType::START_BGA:
   case TaskPointFactoryType::START_SECTOR:
-    newtype = TaskPointFactoryType::START_CYLINDER;
+    newtype = TaskPointFactoryType::START_CYLINDER_EXIT;
     break;
 
   case TaskPointFactoryType::FINISH_LINE:

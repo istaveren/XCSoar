@@ -35,7 +35,8 @@ static constexpr TaskFactoryConstraints touring_constraints = {
 };
 
 static constexpr LegalPointSet touring_start_types{
-  TaskPointFactoryType::START_CYLINDER,
+  TaskPointFactoryType::START_CYLINDER_EXIT,
+  TaskPointFactoryType::START_CYLINDER_ENTRY,
 };
 
 static constexpr LegalPointSet touring_im_types{

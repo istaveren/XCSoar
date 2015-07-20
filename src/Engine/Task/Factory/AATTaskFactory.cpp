@@ -36,7 +36,8 @@ static constexpr TaskFactoryConstraints aat_constraints = {
 
 static constexpr LegalPointSet aat_start_types{
   TaskPointFactoryType::START_LINE,
-  TaskPointFactoryType::START_CYLINDER,
+  TaskPointFactoryType::START_CYLINDER_EXIT,
+  TaskPointFactoryType::START_CYLINDER_ENTRY,
   TaskPointFactoryType::START_SECTOR,
   TaskPointFactoryType::START_BGA,
 };
@@ -69,7 +70,8 @@ AATTaskFactory::GetMutatedPointType(const OrderedTaskPoint &tp) const
   switch (oldtype) {
   case TaskPointFactoryType::START_SECTOR:
   case TaskPointFactoryType::START_LINE:
-  case TaskPointFactoryType::START_CYLINDER:
+  case TaskPointFactoryType::START_CYLINDER_EXIT:
+  case TaskPointFactoryType::START_CYLINDER_ENTRY:
   case TaskPointFactoryType::START_BGA:
     break;
 

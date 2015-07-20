@@ -25,7 +25,7 @@
 void
 SectorDefaults::SetDefaults()
 {
-  start_type = TaskPointFactoryType::START_CYLINDER;
+  start_type = TaskPointFactoryType::START_CYLINDER_EXIT;
   start_radius = fixed(1000);
   turnpoint_type = TaskPointFactoryType::AST_CYLINDER;
   turnpoint_radius = fixed(500);
