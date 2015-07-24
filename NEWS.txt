@@ -4,6 +4,7 @@ Version 6.8 - not yet released
   - faster RASP map change
   - show all RASP maps
   - fix comments in TNP files
+  - ignore trailing whitespace in airspace files (#3546)
   - store user-edited waypoints and markers in "user.cup"
 * devices
   - remove option "Ignore checksum"
@@ -12,6 +13,7 @@ Version 6.8 - not yet released
   - LX: remove support for LX1600 pass-through mode
   - ATR833: new driver
   - Volkslogger: support DAeC keyhole declaration
+  - Westerboer VW921: remove buggy driver (#3215)
   - added TCP port 2000 to portlist (part of #3326)
   - support LXNAV V7 pass-through mode (#1913, #2808, #2919)
 * calculations
@@ -21,6 +23,7 @@ Version 6.8 - not yet released
   - remove setting "Prefer external wind"
   - reduce EKF wind latency
   - fix bogus value in "Nearest Airspace H" InfoBox (#3589)
+  - obey the maximum start speed (#2841)
 * airspace cross-section
   - sync map & cross-section view zoom setting (#2913)
 * infoboxes
@@ -37,6 +40,7 @@ Version 6.8 - not yet released
   - airspace labels
 * user interface
   - allow horizontal speeds in m/s
+  - allow mass in lb, wing loading in lb/ft^2
   - download data files from site configuration
   - remove support for custom status files
   - merge airspace warning buttons "ACK Warn" and "ACK Space" (#1086)

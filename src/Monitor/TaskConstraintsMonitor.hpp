@@ -21,40 +21,20 @@ Copyright_License {
 }
 */
 
-#ifndef XCSOAR_UNITS_UNIT_HPP
-#define XCSOAR_UNITS_UNIT_HPP
+#ifndef XCSOAR_TASK_CONSTRAINTS_MONITOR_HPP
+#define XCSOAR_TASK_CONSTRAINTS_MONITOR_HPP
 
-#include <stdint.h>
+#include "Time/PeriodClock.hpp"
 
-enum class Unit: uint8_t {
-  UNDEFINED,
-  KILOMETER,
-  NAUTICAL_MILES,
-  STATUTE_MILES,
-  KILOMETER_PER_HOUR,
-  KNOTS,
-  STATUTE_MILES_PER_HOUR,
-  METER_PER_SECOND,
-  FEET_PER_MINUTE,
-  METER,
-  FEET,
-  FLIGHT_LEVEL,
-  KELVIN,
-  DEGREES_CELCIUS, // K = C° + 273,15
-  DEGREES_FAHRENHEIT, // K = (°F + 459,67) / 1,8
-  HECTOPASCAL,
-  MILLIBAR,
-  TORR,
-  INCH_MERCURY,
-  KG_PER_M2,
-  LB_PER_FT2,
-  KG,
-  LB,
+class TaskConstraintsMonitor {
+  PeriodClock max_start_speed_clock;
 
-  /**
-   * The sentinel: the number of units in this enum.
-   */
-  COUNT
+public:
+  void Reset() {
+    max_start_speed_clock.Reset();
+  }
+
+  void Check();
 };
 
 #endif

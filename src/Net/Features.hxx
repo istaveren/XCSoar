@@ -21,27 +21,11 @@ Copyright_License {
 }
 */
 
-#ifndef XCSOAR_CONDITION_MONITOR_START_RULES_HPP
-#define XCSOAR_CONDITION_MONITOR_START_RULES_HPP
+#ifndef XCSOAR_NET_FEATURES_HXX
+#define XCSOAR_NET_FEATURES_HXX
 
-#include "ConditionMonitor.hpp"
-
-/**
- * Checks whether aircraft in start sector is within height/speed rules
- */
-class ConditionMonitorStartRules final : public ConditionMonitor {
-  bool withinMargin;
-
-public:
-  constexpr ConditionMonitorStartRules()
-    :ConditionMonitor(60, 1), withinMargin(false) {}
-
-protected:
-  bool CheckCondition(const NMEAInfo &basic,
-                      const DerivedInfo &calculated,
-                      const ComputerSettings &settings) override;
-  void Notify() override;
-  void SaveLast() override {}
-};
+#ifdef HAVE_POSIX
+#define HAVE_UN
+#endif
 
 #endif

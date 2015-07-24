@@ -21,9 +21,19 @@ Copyright_License {
 }
 */
 
-#ifndef XCSOAR_DEVICE_DRIVER_WESTERBOER_VW921_HPP
-#define XCSOAR_DEVICE_DRIVER_WESTERBOER_VW921_HPP
+#ifndef XCSOAR_KOBO_MODEL_HPP
+#define XCSOAR_KOBO_MODEL_HPP
 
-extern const struct DeviceRegister westerboer_vw921_driver;
+#include "Compiler.h"
+
+enum class KoboModel {
+  UNKNOWN,
+  MINI,
+  TOUCH,
+};
+
+gcc_const
+KoboModel
+DetectKoboModel();
 
 #endif

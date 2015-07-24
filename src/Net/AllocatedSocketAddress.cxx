@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Tobias Bieniek <Tobias.Bieniek@gmx.de>
+ * Copyright (C) 2012-2015 Max Kellermann <max@duempel.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,39 +27,58 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "TrackingGestureManager.hpp"
+#include "AllocatedSocketAddress.hxx"
 
 #include <assert.h>
+#include <string.h>
 
-bool
-TrackingGestureManager::Update(PixelScalar x, PixelScalar y)
+#ifdef HAVE_UN
+#include <sys/un.h>
+#endif
+
+AllocatedSocketAddress &
+AllocatedSocketAddress::operator=(SocketAddress src)
 {
-  assert(!points.empty());
+	if (src.IsNull()) {
+		Clear();
+	} else {
+		SetSize(src.GetSize());
+		memcpy(address, src.GetAddress(), size);
+	}
 
-  points.back() = { x, y };
-
-  if (!GestureManager::Update(x, y))
-    return false;
-
-  points.emplace_back(x, y);
-  return true;
+	return *this;
 }
 
 void
-TrackingGestureManager::Start(PixelScalar x, PixelScalar y, int threshold)
+AllocatedSocketAddress::SetSize(size_type new_size)
 {
-  // Start point
-  points.emplace_back(x, y);
+	if (size == new_size)
+		return;
 
-  // Next point that is changed by Update()
-  points.emplace_back(x, y);
-
-  GestureManager::Start(x, y, threshold);
+	free(address);
+	size = new_size;
+	address = (struct sockaddr *)malloc(size);
 }
 
-const TCHAR*
-TrackingGestureManager::Finish()
+#ifdef HAVE_UN
+
+void
+AllocatedSocketAddress::SetLocal(const char *path)
 {
-  points.clear();
-  return GestureManager::Finish();
+	const bool is_abstract = *path == '@';
+
+	/* sun_path must be null-terminated unless it's an abstract
+	   socket */
+	const size_t path_length = strlen(path) + !is_abstract;
+
+	struct sockaddr_un *sun;
+	SetSize(sizeof(*sun) - sizeof(sun->sun_path) + path_length);
+	sun = (struct sockaddr_un *)address;
+	sun->sun_family = AF_UNIX;
+	memcpy(sun->sun_path, path, path_length);
+
+	if (is_abstract)
+		sun->sun_path[0] = 0;
 }
+
+#endif

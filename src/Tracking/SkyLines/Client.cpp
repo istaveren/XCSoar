@@ -26,6 +26,7 @@ Copyright_License {
 #include "Protocol.hpp"
 #include "OS/ByteOrder.hpp"
 #include "NMEA/Info.hpp"
+#include "Net/StaticSocketAddress.hxx"
 #include "Util/CRC.hpp"
 
 #ifdef HAVE_SKYLINES_TRACKING_HANDLER
@@ -69,7 +70,7 @@ SkyLinesTracking::Client::Open(SocketAddress _address)
   Close();
 
   address = _address;
-  if (!socket.CreateUDP())
+  if (!socket.Create(address.GetFamily(), SOCK_DGRAM, 0))
     return false;
 
 #ifdef HAVE_SKYLINES_TRACKING_HANDLER
